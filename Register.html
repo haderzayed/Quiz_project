@@ -1,0 +1,239 @@
+ <html>
+	<head>
+		<title>Register</title>
+		<style>
+			 span{
+                  display:none;
+                 }
+			 table{
+					border:1px solid black;
+					width:650px;
+					padding:5px;
+					margin-top:80px;
+					margin-left:auto; 
+					margin-right:auto;
+			}
+			tr,th,td{
+				 padding: 5px;
+				text-align: center;
+			}
+			input
+			{  
+				 width: 100%; 
+				 border-radius: 5px;
+            }
+			input[type="submit"],input[type="reset"]
+			{
+				width: 30%; 
+				 border-radius: 5px;
+			}
+			.error{
+            border:3px solid red;
+        }
+          .success{
+            border:3px solid green;
+        }
+		</style>
+		 <script>
+			 window.addEventListener('load', function () {//start load event
+				 //1-selct iteam
+				 username = document.getElementById("username");
+				 userpass = document.getElementById("userpass");
+				 userpassvalid = document.getElementById("validuserpass");
+				 useremail = document.getElementById("useremail");
+				  male=document.getElementById("male");
+				 female = document.getElementById("female");
+				 gender = document.querySelectorAll('input[type="radio"]:checked')[0];
+
+
+				 //spans errormsg
+				 usernameerror = document.getElementById("usernameerror");
+				 passworderror = document.getElementById("passworderror");
+				 passwordvaliderror = document.getElementById("passwordvaliderror");
+				 emailerror = document.getElementById("emailerror");
+                 gendererror = document.getElementById("gendererror");
+
+				 //set cookie
+
+
+				 username.focus();
+				 //usernamevalidation 
+				 username.addEventListener('blur', function () {
+					 if (!isusernamevalid()) {
+						 username.focus();
+						 usernameerror.style.display = 'block',
+							 username.className = 'error';
+					 } else {
+						 userpass.focus();
+						 usernameerror.style.display = 'none',
+							 username.className = 'success';
+
+					 }
+				 });//end username event
+				 //password validation 
+				 userpass.addEventListener('blur', function () {
+					 if (!ispasswordvalid()) {
+						 userpass.focus();
+						 passwordvaliderror.style.display = 'block';
+						 userpass.className = 'error';
+					 } else {
+						 userpassvalid.focus();
+						 passwordvaliderror.style.display = 'none';
+						 userpass.className = 'success';
+					 }
+				 });
+
+				 userpassvalid.addEventListener('blur', function () {
+					 if (!ispassword()) {
+						 userpassvalid.focus();
+						 passworderror.style.display = 'block';
+						 userpassvalid.className = 'error';
+					 } else {
+						 useremail.focus();
+						 passworderror.style.display = 'none';
+						 userpassvalid.className = 'success';
+					 }
+				 });
+
+				 //end of password validation
+				 //emailvalidation  
+				 useremail.addEventListener('blur', function () {
+					 if (!isemailvalid()) {
+						 useremail.focus();
+						 emailerror.style.display = 'block';
+						 useremail.className = 'error';
+					 } else {
+
+						 emailerror.style.display = 'none';
+						 useremail.className = 'success';
+
+					 }
+
+				 });//end email validation event
+				 //!(male.checked || female.checked
+				 this.document.forms[0].addEventListener('submit', function (e) {
+                     if (!(male.checked || female.checked)) {
+							 e.preventDefault();
+							 gendererror.style.display = 'block';
+						 } else {
+						 gendererror.style.display = 'none';
+						 setcookiee();
+						 
+						 }
+					 
+			  
+					   });
+				 
+				  this.document.forms[0].addEventListener('reset', function (e) {
+                               if (!confirm('Are You Sure To Want To Reset ?')) {
+                                  e.preventDefault();
+										} else {
+											username.focus();
+										}
+						   });
+
+				  
+				  
+			  });//end load event
+			    //check valid
+			     function isusernamevalid(){
+					 	var usernamepattern = /^[a-zA-Z]{6,12}$/;
+					   if(username.value.match(usernamepattern) ) {
+						  return true ;
+						  }else{
+						  return false;
+						  }
+						};
+				 function ispasswordvalid(){
+					 var passwordpattern=  /^[a-zA-Z0-9!@#$%^&*]{6,16}$/; 
+					 if(userpass.value.match (passwordpattern)){
+						 return true;
+					 }else{
+						 return false ;
+					 }
+				 };
+			  function ispassword (){
+				  if(userpassvalid.value.match(userpass.value)){ 
+					  return true ;
+				  }else{
+					  return false ; 
+				  } 
+			  };
+			   function isemailvalid(){
+				   var useremailpattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+				   if(useremail.value.match(useremailpattern )){ 
+					  return true ;
+				  }else{
+					  return false ; 
+				  } 
+				   
+			 };
+			 function setcookiee() {
+
+				 document.cookie = "name=" + username.value;
+				 document.cookie = "password=" + userpass.value;
+				 document.cookie = "gender=" + document.querySelectorAll("input[type='radio']:checked")[0].value;
+			 }
+			  
+			  
+
+			  
+		</script>
+	</head>
+	<body>
+		<form action="login.html" method="get"> 
+		<table>
+			<tr><th colspan="2">Registration page </th></tr>
+			<tr>
+				<td>User Name</td>
+				<td><input type="text" id="username"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span id="usernameerror">Username Must Be Letters Only between 6 and 12</span> </td>
+			</tr>
+			<tr>
+				<td>User password</td>
+				<td><input type="password" id="userpass"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span id="passwordvaliderror" > password must be valid </span></td>
+			</tr>
+			 
+			<tr>
+				<td>User password validation  </td>
+				<td><input type="password" id="validuserpass"></td> 
+			</tr>
+			<tr>
+				<td colspan="2"><span id="passworderror" > password does not match </span></td>
+			</tr>
+			 
+			<tr>
+				<td> </td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td> <input type="email" id="useremail"></td>
+			</tr>
+			<tr>
+				<td><span id="emailerror"> userpassword Must Be valid </span></td>
+			</tr>
+			<tr>
+				<td> </td>
+			</tr>
+			<tr>
+				<td>Gender</td>
+				<td><input type="radio" name="gender " value="male" id="male"> male </td>
+				<td><input type="radio" name="gender " value="female" id="female">female </td>
+			</tr>
+			<tr>
+				<td><span id="gendererror"> please select gender </span></td>
+			</tr>
+			<tr>
+				<td><input type="submit" id="submit" value="OK"></td>
+				<td><input type="reset" id="reset" value="Cancel"></td>
+
+			</tr>
+		</table>
+	</form>
+	</body>
+</html>
